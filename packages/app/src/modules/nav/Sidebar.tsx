@@ -6,6 +6,7 @@ import {
   SidebarScrollWrapper,
   SidebarSpace,
 } from '@backstage/core-components';
+import { useTranslationRef } from '@backstage/core-plugin-api/alpha';
 import { NavContentBlueprint } from '@backstage/plugin-app-react';
 import { SidebarLogo } from './SidebarLogo';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -13,12 +14,40 @@ import SearchIcon from '@material-ui/icons/Search';
 import { SidebarSearchModal } from '@backstage/plugin-search';
 import { UserSettingsSignInAvatar } from '@backstage/plugin-user-settings';
 import { NotificationsSidebarItem } from '@backstage/plugin-notifications';
+import { appTranslationRef } from '../../translations';
+
+const sidebarTranslationKeys: Record<string, keyof typeof appTranslationRef.T> =
+  {
+    Home: 'sidebar.home',
+    Search: 'sidebar.search',
+    Catalog: 'sidebar.catalog',
+    Create: 'sidebar.create',
+    APIs: 'sidebar.apis',
+    'Catalog Graph': 'sidebar.catalogGraph',
+    Docs: 'sidebar.docs',
+    Notifications: 'sidebar.notifications',
+    'Register Existing…': 'sidebar.registerExisting',
+    Visualizer: 'sidebar.visualizer',
+    Settings: 'sidebar.settings',
+    Menu: 'sidebar.menu',
+  };
 
 export const SidebarContent = NavContentBlueprint.make({
   params: {
     component: ({ navItems }) => {
+      const { t } = useTranslationRef(appTranslationRef);
+
+      const translateSidebarTitle = (title?: string) =>
+        title && sidebarTranslationKeys[title]
+          ? t(sidebarTranslationKeys[title])
+          : title;
+
       const nav = navItems.withComponent(item => (
-        <SidebarItem icon={() => item.icon} to={item.href} text={item.title} />
+        <SidebarItem
+          icon={() => item.icon}
+          to={item.href}
+          text={translateSidebarTitle(item.title)}
+        />
       ));
 
       // Skipped items
@@ -27,11 +56,15 @@ export const SidebarContent = NavContentBlueprint.make({
       return (
         <Sidebar>
           <SidebarLogo />
-          <SidebarGroup label="Search" icon={<SearchIcon />} to="/search">
+          <SidebarGroup
+            label={t('sidebar.search')}
+            icon={<SearchIcon />}
+            to="/search"
+          >
             <SidebarSearchModal />
           </SidebarGroup>
           <SidebarDivider />
-          <SidebarGroup label="Menu" icon={<MenuIcon />}>
+          <SidebarGroup label={t('sidebar.menu')} icon={<MenuIcon />}>
             {nav.take('page:catalog')}
             {nav.take('page:scaffolder')}
             <SidebarDivider />
@@ -44,7 +77,7 @@ export const SidebarContent = NavContentBlueprint.make({
           <NotificationsSidebarItem />
           <SidebarDivider />
           <SidebarGroup
-            label="Settings"
+            label={t('sidebar.settings')}
             icon={<UserSettingsSignInAvatar />}
             to="/settings"
           >
