@@ -34,7 +34,7 @@ const sidebarTranslationKeys: Record<string, keyof typeof appTranslationRef.T> =
 
 export const SidebarContent = NavContentBlueprint.make({
   params: {
-    component: ({ navItems }) => {
+    component: function SidebarComponent({ navItems }) {
       const { t } = useTranslationRef(appTranslationRef);
 
       const translateSidebarTitle = (title?: string) =>
