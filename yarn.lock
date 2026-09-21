@@ -12864,6 +12864,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "app@workspace:packages/app"
   dependencies:
+    "@backstage/catalog-client": "npm:^1.16.2"
     "@backstage/cli": "npm:^0.36.3"
     "@backstage/core-components": "npm:^0.18.11"
     "@backstage/core-plugin-api": "npm:^1.12.7"

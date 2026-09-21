@@ -2,6 +2,7 @@ import { createApp } from '@backstage/frontend-defaults';
 import catalogPlugin from '@backstage/plugin-catalog/alpha';
 import { ensureAppLanguage } from './bootstrapLanguage';
 import { navModule } from './components/root';
+import { catalogApi } from './catalogMock';
 import {
   appTranslations,
   catalogReactTranslations,
@@ -12,7 +13,7 @@ import {
 ensureAppLanguage();
 
 const appOptions = {
-  features: [catalogPlugin, navModule],
+  features: [catalogPlugin, catalogApi, navModule],
   __experimentalTranslations: {
     defaultLanguage: 'pt-BR',
     availableLanguages: ['pt-BR'],
