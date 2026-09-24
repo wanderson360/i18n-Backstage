@@ -4,6 +4,33 @@ import {
 } from '@backstage/frontend-plugin-api';
 import { coreComponentsTranslationRef } from '@backstage/core-components/alpha';
 import { catalogReactTranslationRef } from '@backstage/plugin-catalog-react';
+import { userSettingsTranslationRef } from '@backstage/plugin-user-settings';
+
+Object.assign(userSettingsTranslationRef.getDefaultMessages(), {
+  'themeToggle.title': 'Tema',
+  'themeToggle.description': 'Alterar o modo do tema',
+  'themeToggle.names.light': 'Claro',
+  'themeToggle.names.dark': 'Escuro',
+  'themeToggle.names.auto': 'Automático',
+  'pinToggle.title': 'Fixar barra lateral',
+  'pinToggle.description': 'Impedir que a barra lateral seja recolhida',
+  'profileCard.title': 'Perfil',
+  'appearanceCard.title': 'Aparência',
+  'identityCard.title': 'Identidade do Backstage',
+  'identityCard.noIdentityTitle': 'Nenhuma identidade do Backstage',
+  'emptyProviders.title': 'Nenhum provedor de autenticação',
+  'emptyProviders.description':
+    'Você pode adicionar provedores de autenticação ao Backstage, permitindo usar esses provedores para autenticar-se.',
+  'emptyProviders.action.title':
+    'Abra o app-config.yaml e faça as alterações destacadas abaixo:',
+  'emptyProviders.action.readMoreButtonTitle': 'Saiba mais',
+  'featureFlags.emptyFlags.title': 'Nenhuma flag de funcionalidade',
+  'featureFlags.emptyFlags.description':
+    'As flags de funcionalidade permitem que os plugins registrem funcionalidades no Backstage para que os usuários optem por usá-las. Você pode utilizá-las para dividir a lógica em testes A/B manuais, por exemplo.',
+  'featureFlags.emptyFlags.action.title':
+    'Um exemplo de como adicionar uma flag de funcionalidade está destacado abaixo:',
+  'featureFlags.emptyFlags.action.readMoreButtonTitle': 'Saiba mais',
+});
 
 export const appTranslationRef = createTranslationRef({
   id: 'app',
@@ -363,5 +390,44 @@ export const coreComponentsTranslations = createTranslationMessages({
       'Você parece não estar autenticado. Tente recarregar a página do navegador.',
     'logViewer.downloadBtn.tooltip': 'Baixar logs',
     'logViewer.searchField.placeholder': 'Pesquisar',
+  },
+});
+
+export const userSettingsTranslations = createTranslationMessages({
+  ref: userSettingsTranslationRef,
+  full: true,
+  messages: {
+    'themeToggle.title': 'Tema',
+    'themeToggle.description': 'Alterar o modo do tema',
+    'themeToggle.select': 'Selecionar {{theme}}',
+    'themeToggle.selectAuto': 'Selecionar tema automático',
+    'themeToggle.names.light': 'Claro',
+    'themeToggle.names.dark': 'Escuro',
+    'themeToggle.names.auto': 'Automático',
+    'pinToggle.title': 'Fixar barra lateral',
+    'pinToggle.description': 'Impedir que a barra lateral seja recolhida',
+    'pinToggle.switchTitles.unpin': 'Desafixar barra lateral',
+    'pinToggle.switchTitles.pin': 'Fixar barra lateral',
+    'pinToggle.ariaLabelTitle': 'Alternância para fixar a barra lateral',
+    'profileCard.title': 'Perfil',
+    'appearanceCard.title': 'Aparência',
+    'identityCard.title': 'Identidade do Backstage',
+    'identityCard.noIdentityTitle': 'Nenhuma identidade do Backstage',
+    'identityCard.userEntity': 'Entidade do usuário',
+    'identityCard.ownershipEntities': 'Entidades de propriedade',
+    'emptyProviders.title': 'Nenhum provedor de autenticação',
+    'emptyProviders.description':
+      'Você pode adicionar provedores de autenticação ao Backstage, permitindo usar esses provedores para autenticar-se.',
+    'emptyProviders.action.title':
+      'Abra o app-config.yaml e faça as alterações destacadas abaixo:',
+    'emptyProviders.action.readMoreButtonTitle': 'Saiba mais',
+    'featureFlags.emptyFlags.title': 'Nenhuma flag de funcionalidade',
+    'featureFlags.emptyFlags.description':
+      'As flags de funcionalidade permitem que os plugins registrem funcionalidades no Backstage para que os usuários optem por usá-las. Você pode utilizá-las para dividir a lógica em testes A/B manuais, por exemplo.',
+    'featureFlags.emptyFlags.action.title':
+      'Um exemplo de como adicionar uma flag de funcionalidade está destacado abaixo:',
+    'featureFlags.emptyFlags.action.readMoreButtonTitle': 'Saiba mais',
+    'settingsLayout.title': 'Configurações',
+    sidebarTitle: 'Configurações',
   },
 });

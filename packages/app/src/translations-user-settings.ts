@@ -1,0 +1,37 @@
+import { createTranslationMessages } from '@backstage/frontend-plugin-api';
+import { userSettingsTranslationRef } from '@backstage/plugin-user-settings/alpha';
+
+export const userSettingsTranslations = createTranslationMessages({
+  ref: userSettingsTranslationRef,
+  full: true,
+  messages: {
+    'languageToggle.title': 'Idioma',
+    'languageToggle.description': 'Alterar o idioma',
+    'languageToggle.select': 'Selecionar idioma {{language}}',
+    'themeToggle.title': 'Tema',
+    'themeToggle.description': 'Alterar o modo do tema',
+    'themeToggle.select': 'Selecionar {{theme}}',
+    'themeToggle.selectAuto': 'Selecionar tema automático',
+    'themeToggle.names.light': 'Claro',
+    'themeToggle.names.dark': 'Escuro',
+    'themeToggle.names.auto': 'Automático',
+    'signOutMenu.title': 'Sair',
+    'signOutMenu.moreIconTitle': 'mais',
+    'pinToggle.title': 'Fixar barra lateral',
+    'pinToggle.description': 'Impedir que a barra lateral seja recolhida',
+    'pinToggle.switchTitles.unpin': 'Desafixar barra lateral',
+    'pinToggle.switchTitles.pin': 'Fixar barra lateral',
+    'pinToggle.ariaLabelTitle': 'Alternância para fixar a barra lateral',
+    'identityCard.title': 'Identidade do Backstage',
+    'identityCard.noIdentityTitle': 'Nenhuma identidade do Backstage',
+    'identityCard.userEntity': 'Entidade do usuário',
+    'identityCard.ownershipEntities': 'Entidades de propriedade',
+    'defaultSettingsPage.tabsTitle.general': 'Geral',
+    'defaultSettingsPage.tabsTitle.authProviders': 'Provedores de autenticação',
+    'defaultSettingsPage.tabsTitle.featureFlags': 'Flags de funcionalidade',
+    'settingsLayout.title': 'Configurações',
+    sidebarTitle: 'Configurações',
+    'profileCard.title': 'Perfil',
+    'appearanceCard.title': 'Aparência',
+  },
+});

@@ -1,19 +1,25 @@
 import { createApp } from '@backstage/frontend-defaults';
 import catalogPlugin from '@backstage/plugin-catalog/alpha';
 import { ensureAppLanguage } from './bootstrapLanguage';
-import { navModule } from './components/root';
+import { navModule, userSettingsTranslationsModule } from './components/root';
 import { catalogApi } from './catalogMock';
 import {
   appTranslations,
   catalogReactTranslations,
   catalogTranslations,
   coreComponentsTranslations,
+  userSettingsTranslations,
 } from './translations';
 
 ensureAppLanguage();
 
 const appOptions = {
-  features: [catalogPlugin, catalogApi, navModule],
+  features: [
+    catalogPlugin,
+    catalogApi,
+    navModule,
+    userSettingsTranslationsModule,
+  ],
   __experimentalTranslations: {
     defaultLanguage: 'pt-BR',
     availableLanguages: ['pt-BR'],
@@ -22,6 +28,7 @@ const appOptions = {
       catalogTranslations,
       catalogReactTranslations,
       coreComponentsTranslations,
+      userSettingsTranslations,
     ],
   },
 } as Parameters<typeof createApp>[0] & {
