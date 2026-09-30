@@ -7,8 +7,11 @@
  */
 
 import { createBackend } from '@backstage/backend-defaults';
+import { rollbackPlugin } from './rollback';
 
 const backend = createBackend();
+
+backend.add(rollbackPlugin);
 
 backend.add(import('@backstage/plugin-app-backend'));
 backend.add(import('@backstage/plugin-proxy-backend'));
