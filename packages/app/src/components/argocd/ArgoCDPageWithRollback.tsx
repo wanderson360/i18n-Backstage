@@ -6,7 +6,7 @@ import {
   useApi,
 } from '@backstage/core-plugin-api';
 import { useEntity } from '@backstage/plugin-catalog-react';
-import { Button, TextField, Typography } from '@material-ui/core';
+import { Button, MenuItem, TextField, Typography } from '@material-ui/core';
 import {
   EntityArgoCDHistoryCard,
   isArgocdAvailable,
@@ -17,6 +17,8 @@ type Feedback = {
   severity: 'success' | 'error';
   message: string;
 };
+
+type RollbackMode = 'reset' | 'revert';
 
 function RollbackForm({
   repoPath,
@@ -29,6 +31,7 @@ function RollbackForm({
   const fetchApi = useApi(fetchApiRef);
   const identityApi = useApi(identityApiRef);
   const [commitId, setCommitId] = useState('');
+  const [mode, setMode] = useState<RollbackMode>('reset');
   const [feedback, setFeedback] = useState<Feedback>();
   const [loading, setLoading] = useState(false);
 
@@ -53,6 +56,7 @@ function RollbackForm({
           repoPath,
           commitId: selectedCommit,
           branch,
+          mode,
         }),
       });
       const result = await response.json().catch(() => undefined);
@@ -69,7 +73,9 @@ function RollbackForm({
 
       setFeedback({
         severity: 'success',
-        message: `Rollback alternativo aplicado com sucesso para ${selectedCommit}`,
+        message: `Rollback alternativo aplicado com sucesso usando ${
+          mode === 'reset' ? 'reset (push --force)' : 'revert (commit novo)'
+        } para commit ${selectedCommit}`,
       });
     } catch (error) {
       const details = error instanceof Error ? error.message : String(error);
@@ -106,6 +112,17 @@ function RollbackForm({
           autoComplete="off"
           style={{ flex: '1 1 280px' }}
         />
+        <TextField
+          select
+          label="Modo de rollback"
+          value={mode}
+          onChange={event => setMode(event.target.value as RollbackMode)}
+          disabled={loading}
+          style={{ flex: '0 1 240px', minWidth: 220 }}
+        >
+          <MenuItem value="reset">Reset (push --force)</MenuItem>
+          <MenuItem value="revert">Revert (commit novo)</MenuItem>
+        </TextField>
         <Button
           type="submit"
           variant="contained"
