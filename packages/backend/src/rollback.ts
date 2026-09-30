@@ -21,13 +21,22 @@ async function createRouter() {
   router.use(express.json());
 
   router.post('/', async (request, response) => {
-    const { repoPath, commitId, branch, tag } = request.body ?? {};
+    const {
+      repoPath,
+      commitId,
+      branch,
+      tag,
+      mode: requestedMode,
+    } = request.body ?? {};
+    const mode = requestedMode === undefined ? 'reset' : requestedMode;
 
     if (
       typeof repoPath !== 'string' ||
       !repoPath.trim() ||
       typeof commitId !== 'string' ||
       !/^[0-9a-f]{7,64}$/i.test(commitId) ||
+      (mode !== 'reset' && mode !== 'revert') ||
+      (mode === 'revert' && !branch) ||
       (branch !== undefined &&
         (typeof branch !== 'string' || !branch.trim())) ||
       (tag !== undefined && (typeof tag !== 'string' || !tag.trim())) ||
@@ -35,7 +44,7 @@ async function createRouter() {
     ) {
       return response.status(400).json({
         message:
-          'repoPath and a valid commitId are required, and branch or tag must be provided',
+          'repoPath and a valid commitId are required; branch or tag must be provided; mode must be reset or revert, and revert requires a branch',
       });
     }
 
@@ -51,14 +60,24 @@ async function createRouter() {
 
       if (branch) {
         await runGit(repoPath, ['checkout', branch]);
-        await runGit(repoPath, ['reset', '--hard', commitId]);
-        await runGit(repoPath, [
-          'push',
-          '--force',
-          'origin',
-          '--',
-          `refs/heads/${branch}:refs/heads/${branch}`,
-        ]);
+        if (mode === 'reset') {
+          await runGit(repoPath, ['reset', '--hard', commitId]);
+          await runGit(repoPath, [
+            'push',
+            '--force',
+            'origin',
+            '--',
+            `refs/heads/${branch}:refs/heads/${branch}`,
+          ]);
+        } else {
+          await runGit(repoPath, ['revert', '--no-commit', commitId]);
+          await runGit(repoPath, [
+            'commit',
+            '-m',
+            `Rollback para commit ${commitId}`,
+          ]);
+          await runGit(repoPath, ['push', 'origin', branch]);
+        }
       }
 
       if (tag) {
@@ -77,6 +96,7 @@ async function createRouter() {
         branch: branch || undefined,
         tag: tag || undefined,
         commitId,
+        mode,
       });
     } catch (error) {
       const commandError = error as NodeJS.ErrnoException & {
