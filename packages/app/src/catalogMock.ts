@@ -22,6 +22,7 @@ export const mockEntities: Entity[] = [
     metadata: {
       name: 'example-website',
       description: 'Componente local para desenvolvimento do portal',
+      annotations: { 'argocd/app-name': 'example-website' },
     },
     spec: {
       type: 'website',

@@ -1,7 +1,12 @@
 import { createApp } from '@backstage/frontend-defaults';
 import catalogPlugin from '@backstage/plugin-catalog/alpha';
+import argocdPlugin from '@roadiehq/backstage-plugin-argo-cd/alpha';
 import { ensureAppLanguage } from './bootstrapLanguage';
-import { navModule, userSettingsTranslationsModule } from './components/root';
+import {
+  argocdRollbackModule,
+  navModule,
+  userSettingsTranslationsModule,
+} from './components/root';
 import { catalogApi } from './catalogMock';
 import {
   appTranslations,
@@ -16,9 +21,11 @@ ensureAppLanguage();
 const appOptions = {
   features: [
     catalogPlugin,
+    argocdPlugin,
     catalogApi,
     navModule,
     userSettingsTranslationsModule,
+    argocdRollbackModule,
   ],
   __experimentalTranslations: {
     defaultLanguage: 'pt-BR',
